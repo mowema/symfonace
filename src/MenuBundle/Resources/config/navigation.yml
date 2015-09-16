@@ -1,0 +1,59 @@
+my_mega_menu:
+    childrenAttributes:
+        class: 'nav nav-list'
+    tree:
+        first_level_item_a:
+            label: Lo ve el admin
+            uri: "#"
+            #route: "A sf2 route without @"
+            #routeParameters: "an array of parameters to pass to the route"
+            order: 10
+            attributes:
+                icon: gear
+                dropdown: true
+            linkAttributes: 
+                class: 'dropdown-toggle'
+            #childrenAttributes: An array of attributes passed to the chidlren block
+            #labelAttributes: An array of attributes passed to the label tag
+            #display: boolean to hide the item
+            #displayChildren: boolean to hide the children
+            #roles: array of item (string roles) passed to isGranted securityContext method to check if user has rights in menu items
+            roles:
+                - ROLE_ADMIN
+            children:
+                second_level_item_a:
+                    route: "blog"
+                    label: Blog
+                second_level_item_b:
+                    uri: "#"
+                    label: My second level B
+            childrenAttributes:
+                class: 'submenu'
+        first_level_item_b:
+            label: Lo ven todos
+            uri: '#'
+            #route: "A sf2 route without @"
+            #routeParameters: "an array of parameters to pass to the route"
+            order: 20
+            attributes:
+                icon: pencil
+                dropdown: true
+            linkAttributes: 
+                class: 'dropdown-toggle'
+            roles:
+                - IS_AUTHENTICATED_ANONYMOUSLY
+            #childrenAttributes: An array of attributes passed to the chidlren block
+            #labelAttributes: An array of attributes passed to the label tag
+            #display: boolean to hide the item
+            #displayChildren: boolean to hide the children
+            #roles: array of item (string roles) passed to isGranted securityContext method to check if user has rights in menu items
+            childrenAttributes:
+                class: 'submenu'
+            children:
+                a_second_level_item:
+                    route: 'homepage'
+                    label: 'Submenu'
+                    #attributes:
+                b_second_level_item:
+                    uri: '/'
+                    label: 'el de arriba'

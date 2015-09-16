@@ -1,0 +1,12 @@
+parameters:
+    config.menu.provider.class: MenuBundle\Provider\ConfigurationMenuProvider
+
+services:
+    config.menu.provider:
+        class: %config.menu.provider.class%
+        arguments:
+            - @knp_menu.factory
+            - @event_dispatcher
+            - @security.context
+        tags:
+            - { name: knp_menu.provider }
