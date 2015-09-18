@@ -78,39 +78,43 @@
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                                 <span class="user-info">
                                         <small>Bienvenido,</small>
-                                        
-                                           {{ app.user.username }}
-                                        
+                                           {# app.user.username #}
+                                           {{ app.security.getToken().getUser().getUsername() }}
+                                           
                                 </span>
 
                                 <i class="ace-icon fa fa-caret-down"></i>
                         </a>
 
-                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                                <li>
-                                        <a href="#">
-                                                <i class="ace-icon fa fa-cog"></i>
-                                                Settings
-                                        </a>
-                                </li>
+                        <ul class="user-menu dropdown-navbar dropdown-menu-right dropdown-menu dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li class="dropdown-header">
+                            <i class="ace-icon fa fa-key"></i>
+                            {% for item in app.security.getToken().getUser().getRoles() %}
+                               [{{ item.getName() }}] &nbsp;
+                            {% endfor %}
+                            </li> 
+                            <li class="dropdown-content"  >
+                                <ul class="dropdown-menu dropdown-navbar">
+                                    <li><a href="profile.html">
+                                            <i class="ace-icon fa fa-gear"></i>
+                                            Administrar
+                                    </a></li>
+                                    <li><a href="profile.html">
+                                            <i class="ace-icon fa fa-user"></i>
+                                            Perfil
+                                    </a></li>
+                                </ul>
 
-                                <li>
-                                        <a href="profile.html">
-                                                <i class="ace-icon fa fa-user"></i>
-                                                Profile
-                                        </a>
-                                </li>
+                            </li>
 
-                                <li class="divider"></li>
-
-                                <li>
-                                        <a href="{{ 
-                                            url('logout') 
-                                          }}">
-                                                <i class="ace-icon fa fa-power-off"></i>
-                                                Logout
-                                        </a>
-                                </li>
+                            <li class="dropdown-footer">
+                                    <a href="{{ 
+                                        url('logout') 
+                                      }}">
+                                            <i class="ace-icon fa fa-power-off"></i>
+                                            Logout
+                                    </a>
+                            </li>
                         </ul>
                 </li></ul>
             </div>

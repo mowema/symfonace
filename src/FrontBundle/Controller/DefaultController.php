@@ -1,31 +1,35 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace FrontBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-/** 
-     * @Route("/" )
-     * 
-     */ 
+
 class DefaultController extends Controller
 {
+
+
     /** 
      * @Template("AppBundle:Default:index.html.twig")
+     * @Route("/blog/{name}", name="blog", requirements={"name" = "\d+"}, defaults={"name" = "portada"} )
      */ 
-    public function secondAction($id) { 
-        return array(); }
+    public function indexAction($name)
+    {
+        return $this->render('FrontBundle:Default:index.html.twig', array('name' => $name));
+    }
 
-    /**
+
+
+    /** 
      * @Template("AppBundle:Default:index.html.twig")
-     * @Route("/", name="homepage")
-     */
-    public function indexAction(Request $request)
+     * @Route("/", name="sub", host="what.{domain}")
+     */ 
+
+    public function whatAction(Request $request)
     {
         $slug = $this->get('app.slugger')->slugify('sanéo el texto');
         // replace this example code with whatever you need
@@ -38,6 +42,4 @@ class DefaultController extends Controller
         );
         
     }
-    
 }
-

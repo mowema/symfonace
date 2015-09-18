@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Controller;
+namespace FrontBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -16,11 +16,17 @@ use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
+
 use AppBundle\Entity\User;
 
-class AccountController extends Controller
+class GateController extends Controller
 {
-
+    /**
+     * @Route("/registro", name="account_register")
+     * @Template("AppBundle:Account:register.html.twig")
+     *
+     * @return array
+     */
     
     public function registerAction()
     {
@@ -31,7 +37,12 @@ class AccountController extends Controller
         return  array('form' => $form->createView());
     }
 
-
+    /**
+     * @Route("/registro/crea", name="account_create")
+     * @Template("AppBundle:Account:register.html.twig")
+     *
+     * @return array
+     */
 
     public function createAction(Request $request)
     {
@@ -53,6 +64,12 @@ class AccountController extends Controller
         return array('form' => $form->createView());
     }
     
+    /**
+     * @Route("/hola", name="perfil")
+     * @Template("AppBundle:Account:hello.html.twig")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @return array
+     */
     public function helloAction()
     {
         $user = $this->getUser();
@@ -89,6 +106,12 @@ class AccountController extends Controller
         return new Response('Well hi there ');
     }
         
+    /**
+     * @Route("/chau", name="chau")
+     * @Template("AppBundle:Account:hello.html.twig")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @return array
+     */
     public function chauAction()
     {
         $securityContext = $this->get('security.context');

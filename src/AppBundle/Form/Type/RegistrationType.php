@@ -10,15 +10,15 @@ class RegistrationType extends AbstractType
     {
         $builder->add('user', new UserType());
         $builder->add(
-            'terms',
+            'terminos',
             'checkbox',
             array('property_path' => 'termsAccepted')
         );
-        $builder->add('Register', 'submit');
+        $builder->add('Registrar', 'submit');
     }
 
     public function getName()
     {
-        return 'registration';
+        return 'registro';
     }
 }

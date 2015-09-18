@@ -8,6 +8,7 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -30,6 +31,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
             //new Jb\Bundle\ConfigKnpMenuBundle\JbConfigKnpMenuBundle(),
             new Flob\Bundle\FoundationBundle\FlobFoundationBundle(),
+            new FrontBundle\FrontBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
