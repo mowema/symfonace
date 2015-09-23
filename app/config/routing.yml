@@ -6,6 +6,10 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
+menu:
+    resource: "@MenuBundle/Controller/"
+    type:     annotation
+
 app_user_persona:
     resource: "@AppBundle/Resources/config/routing/user.yml"
     prefix:   /user/persona

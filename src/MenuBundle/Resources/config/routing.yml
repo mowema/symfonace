@@ -1,0 +1,12 @@
+
+default:
+    path:     /default
+    defaults: { _controller: MenuBundle:Menu:default }
+
+generate_menu:
+    path:     /generateMenu
+    defaults: { _controller: MenuBundle:Menu:generateMenu }
+
+items:
+    path:     /items
+    defaults: { _controller: MenuBundle:Menu:items }

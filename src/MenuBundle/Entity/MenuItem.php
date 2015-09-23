@@ -55,6 +55,22 @@ class MenuItem
     private $order;
 
     
+    // ...
+    /**
+     * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="parent")
+     **/
+    private $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="MenuItem", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     **/
+    private $parent;
+    // ...
+
+    public function __construct() {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
 
 }

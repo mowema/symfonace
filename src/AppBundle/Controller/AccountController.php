@@ -21,7 +21,6 @@ use AppBundle\Entity\User;
 class AccountController extends Controller
 {
 
-    
     public function registerAction()
     {
         $form = $this->createForm(new RegistrationType(), new Registration(), array(
@@ -70,21 +69,21 @@ class AccountController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($nuser);
         $entityManager->flush();
-        
-            // creando la ACL
-            $aclProvider = $this->get('security.acl.provider');
-            $objectIdentity = ObjectIdentity::fromDomainObject($nuser);
-            $acl = $aclProvider->createAcl($objectIdentity);
+    
+        // creando la ACL
+        $aclProvider = $this->get('security.acl.provider');
+        $objectIdentity = ObjectIdentity::fromDomainObject($nuser);
+        $acl = $aclProvider->createAcl($objectIdentity);
 
-            // recupera la identidad de seguridad del usuario
-            // registrado actualmente
-            $securityContext = $this->get('security.context');
-            $user = $securityContext->getToken()->getUser();
-            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+        // recupera la identidad de seguridad del usuario
+        // registrado actualmente
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+        $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
-            // otorga permiso de propietario
-            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-            $aclProvider->updateAcl($acl);
+        // otorga permiso de propietario
+        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+        $aclProvider->updateAcl($acl);
         
         return new Response('Well hi there ');
     }
