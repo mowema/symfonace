@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             //new Jb\Bundle\ConfigKnpMenuBundle\JbConfigKnpMenuBundle(),
             new Flob\Bundle\FoundationBundle\FlobFoundationBundle(),
             new FrontBundle\FrontBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

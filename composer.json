@@ -31,7 +31,8 @@
         "sonata-project/admin-bundle":"dev-master",
         "friendsofsymfony/user-bundle" : "~2.0@dev",
         "divi/ajax-login-bundle": "dev-master",
-        "florianbelhomme/flob-foundation-bundle": "~2.1.0"
+        "florianbelhomme/flob-foundation-bundle": "~2.1.0",
+        "stof/doctrine-extensions-bundle":"dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
