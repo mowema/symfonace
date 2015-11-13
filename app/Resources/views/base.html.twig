@@ -9,12 +9,10 @@
         <link rel="stylesheet" href="{{ asset('/fonts/font.css') }}" />
         <link rel="stylesheet" href="{{ asset('//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('/css/properstyle.css') }}" />
         <link rel="stylesheet" href="{{ asset('/dist/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
         {% block stylesheets %}{% endblock %}
-        <script src="{{ asset('https://code.jquery.com/jquery-1.11.3.min.js') }}"></script>
-        <script src="{{ asset('/js/bootstrap.js') }}"></script>
-
-
+       
     <!-- text fonts -->
 
 
@@ -29,10 +27,16 @@
 
     <!-- inline styles related to this page -->
 
-    <!-- ace settings handler -->
+    
+     <script src="{{ asset('https://code.jquery.com/jquery-1.11.3.min.js') }}"></script>
+     <script src="{{ asset('/js/bootstrap.js') }}"></script>
+     
+     <!-- ace settings handler -->
     <script src="{{ asset('/dist/js/ace-elements.min.js') }}"></script>
     <script src="{{ asset('/dist/js/ace-extra.min.js') }}"></script>
     <script src="{{ asset('/dist/js/ace.min.js') }}"></script>
+    
+    <script src="{{ asset('/js/bootstrap-show-password.js') }}"></script>
 
     <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
 
@@ -99,7 +103,9 @@
                                             <i class="ace-icon fa fa-gear"></i>
                                             Administrar
                                     </a></li>
-                                    <li><a href="profile.html">
+                                    <li><a href="{{ 
+                                        url('myprofile') 
+                                      }}">
                                             <i class="ace-icon fa fa-user"></i>
                                             Perfil
                                     </a></li>
@@ -164,31 +170,30 @@
         <div class="main-content">
             <div class="main-content-inner">
                 <div class="page-content">
+                    {% for message in app.session.flashbag.get('info') %}
+                        <div class="alert alert-info alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
                     <div class="page-header">
                         <h1>{% block header %}{% endblock %}</h1>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-
-                            {% for flashMessage in app.session.flashbag.get('error') %}
-                                <div class="alert alert-block alert-success">
-                                    <button data-dismiss="alert" class="close" type="button">
-                                        <i class="ace-icon fa fa-times"></i>
-                                    </button>
-                                    <i class="ace-icon fa fa-check green"></i>{{ flashMessage }}
-                                </div>
-                            {% endfor %}
-
                             <div class="row">
                             {% block body %}{% endblock %}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
 {% block javascripts %}<script type="text/javascript">
     $('li[icon]').each(function () {
         var contenido = $(this).children('a').html();

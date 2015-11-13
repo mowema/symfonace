@@ -1,0 +1,89 @@
+{% extends '::base.html.twig' %}
+{% block header -%}
+    Lista de Usuarios
+{% endblock %}
+{% block body -%}
+    <div class="col-xs-12">
+        <div class="count">
+            {{ pagination.getTotalItemCount }}
+        </div>
+        <table  class="table table-striped">
+        <thead>    
+            <tr>
+            {# sorting of properties based on query components #}
+                <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+                <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Release', ['a.date', 'a.time']) }}</th>
+            </tr>
+        
+        </thead>
+        <tbody>
+            {# table body #}
+            {% for article in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ article.id }}</td>
+                <td>{{ article.username }}</td>
+                <td>{# article.date | date('Y-m-d') }}, {{ article.time | date('H:i:s') #}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+
+        {# app.security.getToken().getUser().getUsername() #}
+        {{ dump(app.security.getToken().getUser()) }}
+        <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Isactive</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr
+                {% if entity.isActive == 0 %}
+                        class="danger"
+                    {% else %}
+                        {% endif %}
+                        >
+                <td><a href="{{ path('edit_user', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.username }}</td>
+                
+                <td>{{ entity.email }}</td>
+                <td>{% for item in entity.roles %}
+                            {{ item }}
+                    {% endfor %}</td>
+                <td>{{ entity.isActive }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('edit_user', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('edit_user', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('create_user') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    </div>
+{% endblock %}

@@ -30,7 +30,7 @@ class DefaultController extends Controller
         $slug = $this->get('app.slugger')->slugify('sanéo el texto');
         // replace this example code with whatever you need
         
-        $this->get('session')->getFlashBag()->set('error', 'Does Not Exist');
+        //$this->get('session')->getFlashBag()->set('error', 'Does Not Exist');
         
         return array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),

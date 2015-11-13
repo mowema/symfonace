@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+{% block header -%}
+    Mi Perfil
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% endblock %}
+{% block body -%}
+    <div class="col-xs-12">
+        <div class="clearfix">
+        <dl class="dl-horizontal">
+            <dt>Nombre:</dt>
+            <dd>{{ app.security.getToken().getUser().getFname() }} {{ app.security.getToken().getUser().getLname() }} </dd>
+            <dt>Usuario:</dt>
+            <dd>{{ app.security.getToken().getUser().getUsername() }} </dd>
+            <dt>Roles:</dt>
+            {% for item in app.security.getToken().getUser().getRoles() %}
+            <dd>{{ item.getName() }}</dd>
+            {% endfor %}
+            <dt>Email:</dt>
+            <dd>{{ app.security.getToken().getUser().getEmail() }} </dd>
+            <dt>Página web:</dt>
+            <dd>{{ app.security.getToken().getUser().getHomepage() }} </dd>
+        </dl></div>
+        <br>
+        <div class="well">
+            <button class="btn btn-white" type="button" data-toggle="collapse" 
+                    data-target="#collapseform" aria-expanded="false" 
+                    aria-controls="collapseform">Modificar mis datos</button>
+            <div class="collapse" id="collapseform">
+               <div class="frame">
+                   {{ form(form) }}
+              </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}
+
+
+
+

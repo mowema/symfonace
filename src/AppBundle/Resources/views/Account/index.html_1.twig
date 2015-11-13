@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+{% block header -%}
+    Mi Perfil
+{% endblock %}
+{% block body -%}
+    <div class="col-xs-12">
+        Hola {{ app.security.getToken().getUser().getUsername() }}
+        {{ dump(app.security.getToken().getUser()) }}
+    </div>
+{% endblock %}

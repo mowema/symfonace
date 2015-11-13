@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class DefaultController extends Controller
 {
 
-
     /** 
      * @Template("AppBundle:Default:index.html.twig")
      * @Route("/blog/{name}", name="blog", requirements={"name" = "\d+"}, defaults={"name" = "portada"} )
@@ -21,7 +20,6 @@ class DefaultController extends Controller
     {
         return $this->render('FrontBundle:Default:index.html.twig', array('name' => $name));
     }
-
 
 
     /** 

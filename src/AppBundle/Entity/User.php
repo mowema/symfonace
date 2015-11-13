@@ -40,6 +40,16 @@ class User implements AdvancedUserInterface, \Serializable
     protected $email;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $fname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $lname;
+
+    /**
      * @Assert\Date()
      */
      protected $created;
@@ -77,18 +87,16 @@ class User implements AdvancedUserInterface, \Serializable
     private $isActive;
 
 
-    
     public function __construct()
     {
         $this->isActive = true;
-    $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->user_roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->user_roles = new \Doctrine\Common\Collections\ArrayCollection();
         //$this->fecha_alta = new \DateTime();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid(null, true));
     }
 
-    
     public function getId(){
         return $this->id;
     }
@@ -105,6 +113,15 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->email;
     }
     
+    function getFname() {
+        return $this->fname;
+    }
+
+    function getLname() {
+        return $this->lname;
+    }
+
+        
     function getCreated() {
         return $this->created;
     }
@@ -195,6 +212,14 @@ class User implements AdvancedUserInterface, \Serializable
 
     function setEmail($email) {
         $this->email = $email;
+    }
+    
+    function setFname($fname) {
+        $this->fname = $fname;
+    }
+
+    function setLname($lname) {
+        $this->lname = $lname;
     }
 
     function setCreated($created) {

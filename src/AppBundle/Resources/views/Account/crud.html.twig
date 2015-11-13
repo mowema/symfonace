@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% block header -%}
+    Creando Usuario
+{% endblock %}
+{% block body %}
+<div class="col-xs-12">
+    
+    <form class="form-horizontal" action="{# path('crud_usuario')#}" method ="post" {{ form_enctype(form)}}>
+    {{ form_widget(form) }}
+    </form>
+</div>
+{% endblock %}
