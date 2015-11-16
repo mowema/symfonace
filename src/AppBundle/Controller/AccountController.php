@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\Type\RegistrationType;
 use AppBundle\Form\Type\UserType;
+use AppBundle\Form\Type\FilterUserType;
 use AppBundle\Form\Model\Registration;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
@@ -45,20 +46,43 @@ class AccountController extends Controller
     public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AppBundle:User')->findAll();
-        $dql   = "SELECT a FROM AppBundle:User a";
-        $query = $em->createQuery($dql);
+        $user = new User();
+        $defaultData = array('message' => 'Type your message here');
+        $form = $this->createFormBuilder($defaultData)->add('email', 'email',array('required'  => false,'empty_data'  => null))->add('submit', 'submit')->getForm();
+        $session = $this->getRequest()->getSession();
+        //$session->set('dql', "SELECT a FROM AppBundle:User a WHERE a.isActive = true ");
+        
+        if ($session->get('dql') == null) {
+            $session->set('dql', "SELECT a FROM AppBundle:User a WHERE a.isActive = true  ");
+        }
+    
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $dql   = "SELECT a FROM AppBundle:User a WHERE a.isActive = true ";
+                $data = $form->getData();
+                if ($data['email']!=''){
+                    $dql .= " AND a.email = '" . $data['email'] . "'";
+                }
+                $session->set('dql', $dql);
+            }
+        }
+        
+        
+        //$entities = $em->getRepository('AppBundle:User')->findAll();
+        
+        $query = $em->createQuery($session->get('dql'));
 
         $paginator  = $this->get('knp_paginator');
-       $pagination = $paginator->paginate($query,
+        $pagination = $paginator->paginate($query,
             //$entities,
             $request->query->getInt('page', 1)/*page number*/,
-            4/*limit per page*/
+            3/*limit per page*/
         );
         return array(
             'pagination' => $pagination,
-            'entities' => $entities,
+            'form' => $form->createView(),
+            //'entities' => $entities,
         );
     }
     

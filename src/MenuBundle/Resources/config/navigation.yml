@@ -22,11 +22,11 @@ my_mega_menu:
                 - ROLE_ADMIN
             children:
                 second_level_item_a:
-                    route: "account_register"
-                    label: usuario nuevo
+                    route: "list_users"
+                    label: Listar Usuarios
                 second_level_item_b:
-                    uri: "#"
-                    label: link
+                    route: "create_user"
+                    label: Crear Usuario
             childrenAttributes:
                 class: 'submenu'
         first_level_item_b:
