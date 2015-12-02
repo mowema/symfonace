@@ -1,5 +1,5 @@
 {% extends '::base.html.twig' %}
-{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% form_theme form 'filterform.html.twig' %}
 {% block header -%}
     Lista de Usuarios
 {% endblock %}
@@ -11,36 +11,73 @@
 </p>
             
         </div>
-<div class="frame">
-                   {{ form(form) }}
-              </div>
+    <div class="frame">
+        {{ form(form) }}
+    </div>
         <table  class="table table-striped">
         <thead>    
             <tr>
             {# sorting of properties based on query components #}
                 <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
                 <th{% if pagination.isSorted('a.username') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Usuario', 'a.username') }}</th>
-                <th{% if pagination.isSorted('a.email') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Email', 'a.email') }}</th>
+                <th{% if pagination.isSorted('a.email') %} class="sorted" {% endif %} width="250px">{{ knp_pagination_sortable(pagination, 'Email', 'a.email') }}</th>
                 <th>Nombre completo</th>
                 <th>Roles</th>
                 <th>Acciones</th>
             </tr>
-        
         </thead>
         <tbody>
             {# table body #}
             {% for entity in pagination %}
-            <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <tr class="{% if loop.index is odd %}color {% endif %} {% if not entity.isactive %}inactivo{% endif %}">
+                
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.username }}</td>
-                <td>{{ entity.email }}</td>
+                <td width="100"><button class="btn btn-warning btn-xs" role="button" data-toggle="collapse" href="#collapseExample_{{ entity.id }}" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-key"></i>
+                    </button> {{ entity.email }}<br>
+                    <div class="collapse" id="collapseExample_{{ entity.id }}">
+                          <hr>
+                          <form class="form-horizontal ajax" onsubmit="return(false)" method="post" action="#">
+                              <div class="form-group">
+                                  <label for="user_{{ entity.id }}_password" class="col-sm-3 control-label required">Cambiar Contraseña</label>
+                                  <div class="col-sm-5">
+                                      <input type="password" class="form-control" data-toggle="password" required="required" name="user[password]" id="user_{{ entity.id }}_password">
+                                  </div>
+                              </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                      <div class="input-group">
+                                          <span class="input-group-addon">
+      <span>Envíar contraseña al usuario</span>
+                                          
+                                        </span>
+                                          <span class="input-group-addon">
+                                          <input type="checkbox" class=""  name="notifico" checked="checked" id="user_notifico_{{ entity.id }}" value="notifico" >
+                                        </span>
+                                      </div><!-- /input-group -->
+                                      
+                                    </div><!-- /.col-lg-6 -->
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-6">
+                                        <button class="btn-default btn" name="user[submit]" id="user_submit" type="submit">Cambiar contraseña</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" class="input-group"  name="user[id]" value="{{ entity.id }}">
+                                </div>
+
+                          </form>
+                    </div>
+                </td>
                 <td>{{ entity.fname }} {{ entity.lname }}</td>
                 <td>{% for item in entity.roles %} {{ item }} {% endfor %} </td>
                 <td>
                    <a class="btn btn-xs btn-success" href="{{ path('edit_user', { 'id': entity.id }) }}">editar</a>
                     </td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </table>
         {# display navigation #}
         <div class="navigation">
@@ -60,4 +97,30 @@
         </li>
     </ul>
     </div>
+        
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    $('.ajax').submit(function(e){
+        var form = $(this);
+       $.ajax({  
+            type: "POST",
+            url: "{{ url('blankpass') }}",
+            data: form.serialize(),
+            success: function(data){
+                console.log(data);
+            }
+        }).done(function() {
+             
+            // $( this ).addClass( "done" );
+        // Optionally alert the user of success here...
+      }).complete(function(){
+          alert(form.serialize());
+      }).fail(function() {
+        // Optionally alert the user of an error here...
+      });
+      
+    });
+</script>
 {% endblock %}

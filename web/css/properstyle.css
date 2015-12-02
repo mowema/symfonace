@@ -32,3 +32,14 @@ and open the template in the editor.
     position: relative;
 }
 
+tr.inactivo {
+    background-color: rgba(215, 197, 195,.4) !important;
+}
+
+.checkbox label div.bootstrap-switch {
+    margin:14px 20px 14px 0;
+}
+.checkbox label{
+    border-left: 1px solid #cfcfcf;
+}
+

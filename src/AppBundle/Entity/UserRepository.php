@@ -50,6 +50,31 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $this->find($user->getId());
     }
 
+    public function ListUsers($options)
+    {
+        //print_r($options['email']);
+        $users = $this->createQueryBuilder('u');
+        $users->where(
+                $users->expr()->andX(
+                    $users->expr()->like('u.email', '\'%'.$options['email'].'%\''),
+                    $users->expr()->like('u.fname', '\'%'.$options['fname'].'%\''),
+                    $users->expr()->like('u.lname', '\'%'.$options['lname'].'%\'')
+                )
+            )
+           
+            //->setParameter('email', 'mail')
+            ->getQuery();
+        
+        if (null === $users) {
+            $message = sprintf(
+                'Sin resultados'
+            );
+            throw new NotFoundException($message);
+        }
+
+        return $users;
+    }
+
     public function supportsClass($class)
     {
         return $this->getEntityName() === $class

@@ -3,13 +3,19 @@ my_mega_menu:
         class: 'nav nav-list'
     tree:
         first_level_item_a:
-            label: Lo ve el admin
+            label: Escritorio
+            route: "core_admin"
+            attributes:
+                icon: dashboard
+                dropdown: false
+        first_level_item_b:
+            label: Usuarios
             uri: "#"
             #route: "A sf2 route without @"
             #routeParameters: "an array of parameters to pass to the route"
             order: 10
             attributes:
-                icon: gear
+                icon: user
                 dropdown: true
             linkAttributes: 
                 class: 'dropdown-toggle'
@@ -29,14 +35,14 @@ my_mega_menu:
                     label: Crear Usuario
             childrenAttributes:
                 class: 'submenu'
-        first_level_item_b:
+        first_level_item_c:
             label: Lo ven todos
             uri: '#'
             #route: "A sf2 route without @"
             #routeParameters: "an array of parameters to pass to the route"
             order: 20
             attributes:
-                icon: pencil
+                icon: gear
                 dropdown: true
             linkAttributes: 
                 class: 'dropdown-toggle'

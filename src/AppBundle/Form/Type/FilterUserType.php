@@ -10,18 +10,15 @@ class FilterUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email','text',array(
-                'label'=>'Correo electrónico',
-                
-                ))
-            
-            ->add('submit', 'submit', array('label' => 'Buscar'));
-        
+                ->add('email', 'text',array('label'  => 'Email','required'  => false))
+                ->add('fname', 'text',array('label'  => 'Nombre','required'  => false))
+                ->add('lname', 'text',array('label'  => 'Apellido','required'  => false))
+                ->add('submit', 'submit',array('label'  => 'Buscar'))
+                ;
     }
-
 
     public function getName()
     {
-        return 'user';
+        return 'filter';
     }
 }
